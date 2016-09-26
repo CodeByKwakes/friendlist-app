@@ -1,9 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';  
+import { combineReducers } from 'redux';  
+import { Provider } from 'react-redux';
 
-export default class App extends Component {
+import { createStore, renderDevTools } from '../utils/devTools';
+
+import FriendListApp from './FriendListApp';  
+import * as reducers from '../reducers';
+
+const reducer = combineReducers(reducers);  
+const store = createStore(reducer);  
+
+console.log(reducers);
+export default class App extends Component {  
   render() {
     return (
-      <h1>Hello, world.</h1>
+      <div>
+        <Provider store={store}>
+          {() => <FriendListApp /> }
+        </Provider>
+
+        {renderDevTools(store)}
+      </div>
     );
   }
 }
